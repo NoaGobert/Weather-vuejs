@@ -15,7 +15,7 @@ app.get('/', (request, response) => {
 
     })
 })
-// const API_URL = "https://api.openweathermap.org/data/2.5/weather";
+
 
 app.listen(port, () => {
 

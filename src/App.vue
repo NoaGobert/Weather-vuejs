@@ -36,6 +36,7 @@
 </template>
 
 <script>
+const apiKey = process.env.VUE_APP_API_KEY;
 const API_URL = "https://api.openweathermap.org/data/2.5/weather";
 export default {
   data() {
@@ -51,7 +52,7 @@ export default {
       try {
         this.loading = true;
         this.error = null;
-        const url = `${API_URL}?q=${this.city}&appid=${process.env.VUE_APP_API_KEY}&units=metric`;
+        const url = `${API_URL}?q=${this.city}&appid=${apiKey}&units=metric`;
 
         const response = await fetch(url);
         if (!response.ok) {

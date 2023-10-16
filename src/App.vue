@@ -38,7 +38,8 @@
 <script>
 import axios from "axios";
 
-const API_URL = "http://weather-api.noagobert.dev";
+const API_URL = "https://api.openweathermap.org/data/2.5/weather";
+const apiKey = import.meta.env.VITE_API_KEY;
 export default {
   data() {
     return {
@@ -52,7 +53,7 @@ export default {
     fetchWeather() {
       this.loading = true;
       this.error = null;
-      const url = `${API_URL}?q=${this.city}&units=metric`;
+      const url = `${API_URL}?q=${this.city}&appid=${apiKey}&units=metric`;
 
       axios
         .get(url)

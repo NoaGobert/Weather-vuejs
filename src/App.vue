@@ -9,8 +9,8 @@
         v-model="city"
         @keyup.enter="fetchWeather"
       />
-      <div v-if="loading">Loading...</div>
-      <div v-if="error">{{ error }}</div>
+      <div v-if="loading" class="mt-4 text-xl font-bold">Loading...</div>
+      <div v-if="error" class="mt-4 text-xl font-bold">{{ error }}</div>
       <div v-if="weather" class="mt-4">
         <h2 class="text-3xl font-bold">
           {{ weather.name }} {{ weather.sys.country }}
@@ -36,8 +36,9 @@
 </template>
 
 <script>
-const apiKey = process.env.VUE_APP_API_KEY;
-const API_URL = "https://api.openweathermap.org/data/2.5/weather";
+import axios from "axios";
+
+const API_URL = "http://weather-api.noagobert.dev";
 export default {
   data() {
     return {
@@ -48,27 +49,27 @@ export default {
     };
   },
   methods: {
-    async fetchWeather() {
-      try {
-        this.loading = true;
-        this.error = null;
-        const url = `${API_URL}?q=${this.city}&appid=${apiKey}&units=metric`;
+    fetchWeather() {
+      this.loading = true;
+      this.error = null;
+      const url = `${API_URL}?q=${this.city}&units=metric`;
 
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        if (!data || !data.name || !data.weather || !data.main) {
-          throw new Error("Invalid response data");
-        }
-        this.weather = data;
-      } catch (error) {
-        console.error(error);
-        this.error = "There was a problem fetching the weather data.";
-      } finally {
-        this.loading = false;
-      }
+      axios
+        .get(url)
+        .then((response) => {
+          const data = response.data;
+          if (!data || !data.name || !data.weather || !data.main) {
+            throw new Error("Invalid response data");
+          }
+          this.weather = data;
+        })
+        .catch((error) => {
+          console.error(error);
+          this.error = "There was a problem fetching the weather data.";
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
 };

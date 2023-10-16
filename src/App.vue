@@ -30,6 +30,20 @@
         <p class="text-6xl font-bold mt-4">
           {{ Math.round(weather.main.temp) }} &#8451;
         </p>
+        <div class="mt-8 flex justify-between">
+          <div>
+            <p class="text-lg font-bold mb-2">High</p>
+            <p class="text-3xl font-bold text-red-500 leading-none">
+              {{ Math.round(weather.main.temp_max) }} &#8451;
+            </p>
+          </div>
+          <div>
+            <p class="text-lg font-bold mb-2">Low</p>
+            <p class="text-3xl font-bold text-blue-500 leading-none">
+              {{ Math.round(weather.main.temp_min) }} &#8451;
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

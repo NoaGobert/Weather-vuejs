@@ -48,44 +48,35 @@
     </div>
   </div>
 </template>
-
-<script>
-import axios from "axios";
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
 
 const API_URL = "https://api.openweathermap.org/data/2.5/weather";
 const apiKey = import.meta.env.VITE_API_KEY;
-export default {
-  data() {
-    return {
-      city: "",
-      weather: null,
-      loading: false,
-      error: null,
-    };
-  },
-  methods: {
-    fetchWeather() {
-      this.loading = true;
-      this.error = null;
-      const url = `${API_URL}?q=${this.city}&appid=${apiKey}&units=metric`;
 
-      axios
-        .get(url)
-        .then((response) => {
-          const data = response.data;
-          if (!data || !data.name || !data.weather || !data.main) {
-            throw new Error("Invalid response data");
-          }
-          this.weather = data;
-        })
-        .catch((error) => {
-          console.error(error);
-          this.error = "There was a problem fetching the weather data.";
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-  },
-};
+let city = ref("");
+let weather = ref(null);
+let loading = ref(false);
+let error = ref(null);
+
+async function fetchWeather() {
+  loading.value = true;
+  error.value = null;
+  const url = `${API_URL}?q=${city.value}&appid=${apiKey}&units=metric`;
+
+  try {
+    const response = await axios.get(url);
+    const data = response.data;
+    if (!data || !data.name || !data.weather || !data.main) {
+      throw new Error("Invalid response data");
+    }
+    weather.value = data;
+  } catch (err) {
+    console.error(err);
+    error.value = "There was a problem fetching the weather data.";
+  } finally {
+    loading.value = false;
+  }
+}
 </script>

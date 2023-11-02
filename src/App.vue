@@ -10,10 +10,10 @@
         @keyup.enter="fetchWeather"
       />
       <div v-if="loading" class="mt-4 text-xl font-bold">Loading...</div>
-      <div v-if="error" class="mt-4 text-xl font-bold">{{ error }}</div>
+      <div v-if="error" class="mt-4 text-xl font-bold text-red-500">{{ error }}</div>
       <div v-if="weather" class="mt-4">
         <h2 class="text-3xl font-bold">
-          {{ weather.name }} {{ weather.sys.country }}
+          {{ weather.name }}, {{ weather.sys.country }}
         </h2>
         <div class="flex items-center mt-4">
           <img
@@ -30,17 +30,18 @@
         <p class="text-6xl font-bold mt-4">
           {{ Math.round(weather.main.temp) }} &#8451;
         </p>
+       
         <div class="mt-8 flex justify-between">
           <div>
-            <p class="text-lg font-bold mb-2">High</p>
-            <p class="text-3xl font-bold text-red-500 leading-none">
-              {{ Math.round(weather.main.temp_max) }} &#8451;
+            <p class="text-lg font-bold mb-2">Wind Speed</p>
+            <p class="text-3xl font-bold text-green-500 leading-none">
+              {{Math.round( weather.wind.speed) }} m/s
             </p>
           </div>
           <div>
-            <p class="text-lg font-bold mb-2">Low</p>
+            <p class="text-lg font-bold mb-2">Humidity</p>
             <p class="text-3xl font-bold text-blue-500 leading-none">
-              {{ Math.round(weather.main.temp_min) }} &#8451;
+              {{ weather.main.humidity }} %
             </p>
           </div>
         </div>

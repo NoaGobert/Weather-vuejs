@@ -18,9 +18,9 @@
         <div class="flex items-center mt-4">
           <img
             :src="
-              'https://openweathermap.org/img/w/' +
+              'https://openweathermap.org/img/wn/' +
               weather.weather[0].icon +
-              '.png'
+              '@2x.png'
             "
             :alt="weather.weather[0].description"
             class="w-16 h-16 mr-4"

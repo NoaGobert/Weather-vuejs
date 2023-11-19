@@ -56,12 +56,14 @@ import axios from 'axios';
 const API_URL = "https://api.openweathermap.org/data/2.5/weather";
 const apiKey = import.meta.env.VITE_API_KEY;
 
-let city = ref("");
-let weather = ref(null);
-let loading = ref(false);
-let error = ref(null);
+const city = ref("");
+const weather = ref(null);
+const loading = ref(false);
+const error = ref(null);
 
-async function fetchWeather() {
+
+
+const fetchWeather = async () => {
   loading.value = true;
   error.value = null;
   const url = `${API_URL}?q=${city.value}&appid=${apiKey}&units=metric`;
@@ -79,5 +81,5 @@ async function fetchWeather() {
   } finally {
     loading.value = false;
   }
-}
+};
 </script>

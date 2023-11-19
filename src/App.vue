@@ -35,7 +35,7 @@
           <div>
             <p class="text-lg font-bold mb-2">Wind Speed</p>
             <p class="text-3xl font-bold text-green-500 leading-none">
-              {{Math.round( weather.wind.speed) }} m/s
+              {{Math.round( weather.wind.speed) }} km/h
             </p>
           </div>
           <div>

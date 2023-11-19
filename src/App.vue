@@ -7,25 +7,29 @@
                 >
                     <font-awesome-icon
                         icon="magnifying-glass"
-                        style="color: #ffffff"
+                        class="text-white cursor-pointer"
+                        @click="fetchWeather"
                     />
                     <input
                         type="text"
-                        placeholder="Search for a city..."
-                        class="placeholder-white bg-transparent border-none focus:outline-none text-white text-lg"
+                        placeholder="Search city"
+                        v-model="city"
+                        @keyup.enter="fetchWeather"
+                        class="placeholder-white bg-transparent border-none focus:outline-none text-white text-lg w-24 sm:w-48 md:w-64"
                     />
                 </div>
 
-                <div class="text-white text-3xl flex items-center gap-3">
-                    <button>&deg;C</button>
-                    <button>F&deg;</button>
+                <div class="text-white text-2xl flex items-center gap-5">
+                    <button @click="toggleUnit">
+                        {{ isCelsius ? "°C" : "°F" }}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-    import { ref, onMounted } from "vue";
+    import { ref, onMounted, watch } from "vue";
     import axios from "axios";
 
     const API_URL = "https://api.openweathermap.org/data/2.5/weather";
@@ -39,19 +43,24 @@
     const latitude = ref(null);
     const longitude = ref(null);
 
+    const isCelsius = ref(true);
+
+    const toggleUnit = () => {
+        isCelsius.value = !isCelsius.value;
+    };
+    const url = ref(`${API_URL}?q=${city.value}&appid=${apiKey}&units=metric`);
     const fetchWeather = async () => {
         loading.value = true;
         error.value = null;
 
-        const url = `${API_URL}?q=${city.value}&appid=${apiKey}&units=metric`;
-
         try {
-            const response = await axios.get(url);
+            const response = await axios.get(url.value);
             const data = response.data;
             if (!data || !data.name || !data.weather || !data.main) {
                 throw new Error("Invalid response data");
             }
             weather.value = data;
+            console.log(response);
         } catch (err) {
             error.value = "There was a problem fetching the weather data.";
         } finally {
@@ -83,6 +92,15 @@
             });
         }
     };
+
+    watch(isCelsius, (newVal, oldVal) => {
+        if (newVal !== oldVal) {
+            url.value = `${API_URL}?q=${city.value}&appid=${apiKey}&units=${
+                newVal ? "metric" : "imperial"
+            }`;
+            fetchWeather();
+        }
+    });
 
     onMounted(fetchWeatherByLocation);
 </script>

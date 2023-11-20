@@ -25,11 +25,14 @@
                     </button>
                 </div>
             </div>
+            <div>
+                <h1>{{}}</h1>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
-    import { ref, onMounted, watch } from "vue";
+    import { ref, onMounted, computed, watch } from "vue";
     import axios from "axios";
 
     const API_URL = "https://api.openweathermap.org/data/2.5/weather";
@@ -48,7 +51,12 @@
     const toggleUnit = () => {
         isCelsius.value = !isCelsius.value;
     };
-    const url = ref(`${API_URL}?q=${city.value}&appid=${apiKey}&units=metric`);
+    const url = computed(
+        () =>
+            `${API_URL}?q=${city.value}&appid=${apiKey}&units=${
+                isCelsius.value ? "metric" : "imperial"
+            }`
+    );
     const fetchWeather = async () => {
         loading.value = true;
         error.value = null;
@@ -92,15 +100,7 @@
             });
         }
     };
-
-    watch(isCelsius, (newVal, oldVal) => {
-        if (newVal !== oldVal) {
-            url.value = `${API_URL}?q=${city.value}&appid=${apiKey}&units=${
-                newVal ? "metric" : "imperial"
-            }`;
-            fetchWeather();
-        }
-    });
+    watch(isCelsius, fetchWeather);
 
     onMounted(fetchWeatherByLocation);
 </script>

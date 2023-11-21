@@ -25,8 +25,11 @@
                     </button>
                 </div>
             </div>
-            <div>
-                <h1>{{}}</h1>
+            <div
+                class="flex justify-center items-center text-white font-bold text-4xl mt-12"
+                v-if="weather"
+            >
+                <h1>{{ weather.name }}, {{ weather.sys.country }}</h1>
             </div>
         </div>
     </div>
@@ -47,7 +50,6 @@
     const longitude = ref(null);
 
     const isCelsius = ref(true);
-
     const toggleUnit = () => {
         isCelsius.value = !isCelsius.value;
     };
@@ -63,7 +65,9 @@
 
         try {
             const response = await axios.get(url.value);
+
             const data = response.data;
+
             if (!data || !data.name || !data.weather || !data.main) {
                 throw new Error("Invalid response data");
             }

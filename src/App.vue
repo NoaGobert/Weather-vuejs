@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white min-h-screen flex items-center justify-center">
-        <div class="bg-primary w-[80%] rounded-lg shadow-lg p-8">
+        <div class="bg-primary min-w-[80%] rounded-lg shadow-lg p-8">
             <div class="flex items-center justify-between">
                 <div
                     class="flex justify-center items-center gap-2 bg-secondary rounded-lg p-2"
@@ -44,10 +44,25 @@
                     :alt="weather.weather[0].description"
                     class="w-28 h-28"
                 />
-                <p class="text-2xl font-bold">
-                    {{ Math.round(weather.main.temp) }}
-                    {{ isCelsius ? "°C" : "°F" }}
+                <p class="text-3xl font-bold">
+                    {{ Math.round(weather.main.temp) }}°
                 </p>
+                <div class="flex justify-center items-center gap-4">
+                    <p>Min : {{ Math.round(weather.main.temp_min) }}°</p>
+                    <p>Max : {{ Math.round(weather.main.temp_max) }}°</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4 w-full text-left text-sm">
+                    <div class="bg-secondary py-7 px-10 rounded-lg">
+                        Real Feel
+                    </div>
+                    <div class="bg-secondary py-7 px-10 rounded-lg">
+                        Humidity
+                    </div>
+                    <div class="bg-secondary py-7 px-10 rounded-lg">wind</div>
+                    <div class="bg-secondary py-7 px-10 rounded-lg">
+                        Pressure
+                    </div>
+                </div>
             </div>
         </div>
     </div>

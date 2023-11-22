@@ -44,6 +44,10 @@
                     :alt="weather.weather[0].description"
                     class="w-28 h-28"
                 />
+                <p class="text-2xl font-bold">
+                    {{ Math.round(weather.main.temp) }}
+                    {{ isCelsius ? "°C" : "°F" }}
+                </p>
             </div>
         </div>
     </div>
@@ -100,7 +104,11 @@
                 latitude.value = position.coords.latitude;
                 longitude.value = position.coords.longitude;
 
-                const url = `${API_URL}?lat=${latitude.value}&lon=${longitude.value}&appid=${apiKey}&units=metric`;
+                const url = `${API_URL}?lat=${latitude.value}&lon=${
+                    longitude.value
+                }&appid=${apiKey}&units=${
+                    isCelsius.value ? "metric" : "imperial"
+                }`;
 
                 try {
                     const response = await axios.get(url);
@@ -118,7 +126,13 @@
             });
         }
     };
-    watch(isCelsius, fetchWeather);
+    watch(isCelsius, () => {
+        if (city.value) {
+            fetchWeather();
+        } else {
+            fetchWeatherByLocation();
+        }
+    });
 
     onMounted(fetchWeatherByLocation);
 </script>

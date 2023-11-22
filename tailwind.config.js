@@ -6,11 +6,12 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'cold': "url('./src/assets/cold-bg.jpg')",
-        'warm': "url('./src/assets/warm-bg.jpg')",
-      }
+      backgroundColor: {
+        primary: "#252325",
+        secondary: "#2b2a2b",
+      },
     },
-  },
-  plugins: [],
-}
+
+    plugins: [],
+  }
+};

@@ -1,6 +1,10 @@
 <template>
-    <div class="bg-white min-h-screen flex items-center justify-center">
-        <div class="bg-primary min-w-[80%] rounded-lg shadow-lg p-8">
+    <div
+        class="bg-primary md:bg-white min-h-screen flex items-center justify-center"
+    >
+        <div
+            class="bg-primary min-w-[80%] md:rounded-lg md:shadow-lg p-8 md:min-w-[60%]"
+        >
             <div class="flex items-center justify-between">
                 <div
                     class="flex justify-center items-center gap-2 bg-secondary rounded-lg p-2"

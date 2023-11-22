@@ -26,10 +26,15 @@
                 </div>
             </div>
             <div
-                class="flex justify-center items-center text-white font-bold text-4xl mt-12"
+                class="flex flex-col justify-center items-center text-white mt-12 gap-6"
                 v-if="weather"
             >
-                <h1>{{ weather.name }}, {{ weather.sys.country }}</h1>
+                <h1 class="font-bold text-4xl">
+                    {{ weather.name }}, {{ weather.sys.country }}
+                </h1>
+                <h4 class="bg-secondary rounded-full py-2 px-8">
+                    {{ weather.weather[0].main }}
+                </h4>
             </div>
         </div>
     </div>

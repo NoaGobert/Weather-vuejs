@@ -66,7 +66,6 @@
                             <p>Real Feel</p>
                             <p>{{ Math.round(weather.main.feels_like) }}°</p>
                         </div>
-                        >>>>>>> dev
                     </div>
                     <div
                         class="bg-secondary py-7 px-10 rounded-lg flex items-center gap-4"

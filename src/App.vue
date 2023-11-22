@@ -35,6 +35,15 @@
                 <h4 class="bg-secondary rounded-full py-2 px-8">
                     {{ weather.weather[0].main }}
                 </h4>
+                <img
+                    :src="
+                        'https://openweathermap.org/img/wn/' +
+                        weather.weather[0].icon +
+                        '@2x.png'
+                    "
+                    :alt="weather.weather[0].description"
+                    class="w-28 h-28"
+                />
             </div>
         </div>
     </div>

@@ -52,15 +52,44 @@
                     <p>Max : {{ Math.round(weather.main.temp_max) }}°</p>
                 </div>
                 <div class="grid grid-cols-2 gap-4 w-full text-left text-sm">
-                    <div class="bg-secondary py-7 px-10 rounded-lg">
-                        Real Feel
+                    <div
+                        class="bg-secondary py-7 px-10 rounded-lg flex items-center gap-4"
+                    >
+                        <i
+                            class="fa-solid fa-temperature-three-quarters text-2xl"
+                        ></i>
+
+                        <div>
+                            <p>Real Feel</p>
+                            <p>{{ Math.round(weather.main.feels_like) }}°</p>
+                        </div>
                     </div>
-                    <div class="bg-secondary py-7 px-10 rounded-lg">
-                        Humidity
+                    <div
+                        class="bg-secondary py-7 px-10 rounded-lg flex items-center gap-4"
+                    >
+                        <i class="fa-solid fa-droplet text-2xl"></i>
+                        <div>
+                            <p>Humidity</p>
+                            <p>{{ weather.main.humidity }}%</p>
+                        </div>
                     </div>
-                    <div class="bg-secondary py-7 px-10 rounded-lg">wind</div>
-                    <div class="bg-secondary py-7 px-10 rounded-lg">
-                        Pressure
+                    <div
+                        class="bg-secondary py-7 px-10 rounded-lg flex items-center gap-4"
+                    >
+                        <i class="fa-solid fa-wind text-2xl"></i>
+                        <div>
+                            <p>Wind</p>
+                            <p>{{ windSpeed }} m/s</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-secondary py-7 px-10 rounded-lg flex items-center gap-4"
+                    >
+                        <i class="fa-solid fa-gauge-high text-2xl"></i>
+                        <div>
+                            <p>Pressure</p>
+                            <p>{{ weather.main.pressure }} hPa</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -146,6 +175,15 @@
             fetchWeather();
         } else {
             fetchWeatherByLocation();
+        }
+    });
+    const windSpeed = computed(() => {
+        if (!isCelsius.value && weather.value && weather.value.wind) {
+            return (weather.value.wind.speed * 0.44704).toFixed(2);
+        } else if (weather.value && weather.value.wind) {
+            return weather.value.wind.speed;
+        } else {
+            return null;
         }
     });
 
